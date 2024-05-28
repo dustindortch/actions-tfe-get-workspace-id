@@ -27,7 +27,7 @@ outputs:
     description: "The result of the operation. Possible values are `Success`, `Error` or `Timeout`"
     value: ${{ steps.get-workspace-id.outputs.status }}
   workspace_id:
-    description: Strategy matrix listing all environments matching "filter-on" and "filter-by".  Use in subsequent job as `fromJson(needs.<job_name>.outputs.matrix' and within 'environment' as 'matrix.environment'.
+    description: The workspace ID given by the provided workspace name.
     value: ${{ steps.get-workspace-id.outputs.workspace_id }}
 
 runs:
@@ -37,7 +37,7 @@ runs:
       name: Get workspace ID
       shell: bash
       run: |
-        RESPONSE=$(curl -X GET -w "%{stderr}{\"status\": \"%{http_code}\", \"body\":\"%{stdout}\"}" https://${{ inputs.hostname }}/api/v2/organizations/${{ inputs.organization }}/workspaces/${{ inputs.workspace }} -H 'Content-Type: application/vnd.api+json' -H "Authorization: Bearer ${{ inputs.token }}" | jq '.data.id' -r)" >> $GITHUB_OUTPUT
+        RESPONSE=$(curl -X GET -w "%{stderr}{\"status\": \"%{http_code}\", \"body\":\"%{stdout}\"}" https://${{ inputs.hostname }}/api/v2/organizations/${{ inputs.organization }}/workspaces/${{ inputs.workspace }} -H 'Content-Type: application/vnd.api+json' -H "Authorization: Bearer ${{ inputs.token }}")"
         echo "status=$($RESPONSE | jq '.status' -r)" >> $GITHUB_OUTPUT
         echo "workspace_id=$($RESPONSE | jq '.body.data.id' -r)" >> $GITHUB_OUTPUT
 ...
