@@ -39,6 +39,6 @@ runs:
       run: |
         RESPONSE=$(curl -X GET -s -o response.txt -w "%{response_code}" https://${{ inputs.hostname }}/api/v2/organizations/${{ inputs.organization }}/workspaces/${{ inputs.workspace }} -H 'Content-Type: application/vnd.api+json' -H "Authorization: Bearer ${{ inputs.token }}" 2>&1)
         echo "status=$RESPONSE" >> $GITHUB_OUTPUT
-        echo "workspace_id=$(cat response.txt | jq '.body.data.id' -r)" >> $GITHUB_OUTPUT
+        echo "workspace_id=$(cat response.txt | jq '.data.id' -r)" >> $GITHUB_OUTPUT
         rm response.txt
 ...
