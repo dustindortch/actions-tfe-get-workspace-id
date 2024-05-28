@@ -37,7 +37,7 @@ runs:
       name: Get workspace ID
       shell: bash
       run: |
-        RESPONSE=$(curl -X GET -w "%{stderr}{\"status\": \"%{http_code}\", \"body\":\"%{stdout}\"}" https://${{ inputs.hostname }}/api/v2/organizations/${{ inputs.organization }}/workspaces/${{ inputs.workspace }} -H 'Content-Type: application/vnd.api+json' -H "Authorization: Bearer ${{ inputs.token }}")"
+        RESPONSE=$(curl -X GET -w "%{stderr}{\"status\": \"%{http_code}\", \"body\":\"%{stdout}\"}" https://${{ inputs.hostname }}/api/v2/organizations/${{ inputs.organization }}/workspaces/${{ inputs.workspace }} -H 'Content-Type: application/vnd.api+json' -H "Authorization: Bearer ${{ inputs.token }}")
         echo "status=$($RESPONSE | jq '.status' -r)" >> $GITHUB_OUTPUT
         echo "workspace_id=$($RESPONSE | jq '.body.data.id' -r)" >> $GITHUB_OUTPUT
 ...
